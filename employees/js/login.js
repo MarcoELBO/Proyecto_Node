@@ -2,10 +2,6 @@ window.onload = init;
 
 function init() {
     if (!localStorage.getItem('token')) {
-        document.querySelector('.btn-secondary').addEventListener('click', function() {
-            window.location.href = 'signin.html';
-        });
-
         document.querySelector('.btn-primary').addEventListener('click', login);
     } else {
         window.location.href = 'employees.html';
@@ -13,8 +9,9 @@ function init() {
 }
 
 function login() {
-    var mail = document.getElementById('input-mail').value;
-    var pass = document.getElementById('input-password').value;
+    const mail = document.getElementById('input-mail').value;
+    const pass = document.getElementById('input-password').value;
+    const errorMessage = document.getElementById('error-message');
 
     axios.post('http://localhost:3000/user/login', {
         user_mail: mail,
@@ -23,11 +20,21 @@ function login() {
         if (res.data.code === 200) {
             localStorage.setItem('token', res.data.message);
             window.location.href = 'employees.html';
-        } else {
-            alert('Usuario y/o contraseña incorrectos');
         }
     }).catch(function(err) {
-        console.log(err);
+        if (err.response && err.response.status === 401) {
+            // Mostrar el mensaje de error si las credenciales son incorrectas
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Correo o contraseña incorrectos. Inténtalo de nuevo.';
+        } else {
+            console.log(err);
+        }
     });
 }
+
+
+
+
+
+
 
