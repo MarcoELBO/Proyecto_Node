@@ -1,22 +1,29 @@
+const morgan = require('morgan');
 const express = require('express');
-const cors = require('./middleware/cors');
-const notFound = require('./middleware/notFound');
-const employeesRoutes = require('./routes/employees');
-const usersRoutes = require('./routes/users');
-
 const app = express();
 
-app.use(express.json());
+const employees = require('./routes/employees');
+const users = require('./routes/users');
+
+const auth = require('./middleware/auth');
+const notFound = require('./middleware/notFound');
+const index = require('./middleware/index');
+const cors = require('./middleware/cors');
+
 app.use(cors);
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Rutas
-app.use('/api/employees', employeesRoutes);
-app.use('/api/users', usersRoutes);
+app.get('/', index);
 
-// Middleware para manejar rutas no encontradas
+app.use('/user', users);
+
+app.use(auth);
+app.use('/employees', employees);
+
 app.use(notFound);
 
-// Iniciar el servidor
-app.listen(3000, () => {
-    console.log('Servidor ejecutándose en el puerto 3000');
+app.listen(process.env.PORT || 3000, () => {
+    console.log('Server is running on port 3000');
 });
