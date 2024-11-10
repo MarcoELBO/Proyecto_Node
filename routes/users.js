@@ -5,7 +5,7 @@ const db = require('../config/database');
 
 user.post("/login", async (req, res, next) => {
     const { user_mail, user_password } = req.body;
-    const query = `SELECT * FROM users WHERE user_mail = ?`;
+    const query = `SELECT * FROM users WHERE user_email = ?`;
     const rows = await db.query(query, [user_mail]);
 
     // Validación de usuario y contraseña en texto plano
