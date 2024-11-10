@@ -4,16 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Empleados</title>
+    <link rel="stylesheet" href="css/styles_employees.css"> <!-- Enlace al archivo CSS -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./js/employees.js"></script>
 </head>
 <body>
-    <h1>Administración de Empleados</h1>
-    <input type="text" id="search-name" placeholder="Buscar empleado por nombre" />
-    <button onclick="searchEmployee()">Buscar</button>
-    <button id="logoutButton">Cerrar sesión</button>
-    <div id="employeeList"></div>
+    <!-- Barra de Navegación -->
+    <nav class="navbar">
+        <h1 class="navbar-title">Administración de Empleados</h1>
+        <input type="text" id="search-name" placeholder="Buscar empleado por nombre" class="input">
+        <button onclick="searchEmployee()" class="btn btn-primary">Buscar</button>
+        <button onclick="showAddEmployeeForm()" class="btn btn-primary">Agregar Empleado</button>
+        <button id="logoutButton" class="btn btn-danger" onclick="logout()">Cerrar sesión</button>
+    </nav>
+
+    <!-- Lista de Empleados -->
+    <div class="content">
+        <div id="employeeList" class="employee-list"></div>
+
+        <!-- Formulario para agregar empleado -->
+        <div id="addEmployeeForm" class="form-container hidden">
+            <h2>Agregar Empleado</h2>
+            <input type="text" id="first_name" placeholder="Nombre" class="input">
+            <input type="text" id="last_name" placeholder="Apellido" class="input">
+            <input type="text" id="phone" placeholder="Teléfono" class="input">
+            <input type="text" id="email" placeholder="Correo" class="input">
+            <input type="text" id="address" placeholder="Dirección" class="input">
+            <button onclick="addEmployee()" class="btn btn-primary">Guardar</button>
+            <button onclick="hideAddEmployeeForm()" class="btn btn-secondary">Cancelar</button>
+        </div>
+
+        <!-- Formulario para editar empleado -->
+        <div id="editEmployeeForm" class="form-container hidden">
+            <h2>Editar Empleado</h2>
+            <input type="hidden" id="edit_id">
+            <input type="text" id="edit_first_name" placeholder="Nombre" class="input">
+            <input type="text" id="edit_last_name" placeholder="Apellido" class="input">
+            <input type="text" id="edit_phone" placeholder="Teléfono" class="input">
+            <input type="text" id="edit_email" placeholder="Correo" class="input">
+            <input type="text" id="edit_address" placeholder="Dirección" class="input">
+            <button onclick="updateEmployee()" class="btn btn-primary">Actualizar</button>
+            <button onclick="hideEditEmployeeForm()" class="btn btn-secondary">Cancelar</button>
+        </div>
+    </div>
 </body>
 </html>
+
+
+
+
+
+
 
 

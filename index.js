@@ -7,7 +7,6 @@ const users = require('./routes/users');
 
 const auth = require('./middleware/auth');
 const notFound = require('./middleware/notFound');
-const index = require('./middleware/index');
 const cors = require('./middleware/cors');
 
 app.use(cors);
@@ -15,15 +14,18 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', index);
-
+// Rutas
 app.use('/user', users);
 
-app.use(auth);
+app.use(auth); // Protege las rutas de empleados con autenticación
 app.use('/employees', employees);
 
-app.use(notFound);
+app.use(notFound); // Middleware para rutas no encontradas
 
+// Inicia el servidor
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server is running on port 3000');
 });
+
+
+
